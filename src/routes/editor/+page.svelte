@@ -12,7 +12,7 @@
 <p>
   <label for="duation">feature 1</label>
   <input id="duration" value="value" />
-  <button>remove</button>
+  <button class="danger">remove</button>
 </p>
 <p>
   <button>Add new feature</button>
@@ -22,14 +22,17 @@
 <p>
   <input value="1" />
   <input value="component 1" />
-  <button>remove</button>
+  <button class="danger">remove</button>
 </p>
 <p>
   <button>Add new component</button>
 </p>
 
 <h2>Procedure</h2>
-<textarea></textarea>
+<textarea rows="6"></textarea>
 
 <h2>Notes</h2>
-<textarea> </textarea>
+<textarea rows="6"> </textarea>
+
+<style>
+</style>

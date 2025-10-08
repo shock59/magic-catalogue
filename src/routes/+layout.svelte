@@ -12,4 +12,6 @@
   />
 </svelte:head>
 
-{@render children?.()}
+<main>
+  {@render children?.()}
+</main>

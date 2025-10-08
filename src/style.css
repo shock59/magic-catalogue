@@ -1,8 +1,53 @@
 body {
+  min-height: 100vh;
   margin: 0;
+  background: #fbf0d9;
   font-family: "Noto Serif", serif;
+}
+
+main {
+  padding: 16px;
 }
 
 h1 {
   font-family: "Quintessential", serif;
+}
+
+input,
+textarea,
+button {
+  padding: 8px;
+  border: 1px #d3c199 solid;
+  border-radius: 8px;
+  outline: 1px transparent solid;
+  background: #ffefcd;
+  color: inherit;
+  font: inherit;
+  transition: 200ms;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #9131ff;
+  outline-color: #0000ff;
+}
+
+textarea {
+  width: calc(100% - 16px);
+  resize: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:hover {
+  border-color: #a89771;
+  background: #d3c199 !important;
+}
+
+button.danger:hover {
+  border-color: #961b12;
+  background: #db3529 !important;
+  color: #ffffff;
 }
