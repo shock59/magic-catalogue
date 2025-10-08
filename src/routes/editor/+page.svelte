@@ -4,28 +4,28 @@
 <h1>Spell editor</h1>
 
 <p>
-	<input type="text" placeholder="Name" />
+  <input type="text" placeholder="Name" />
 </p>
 <p><input type="summary" placeholder="Summary" /></p>
 
 <h2>Features</h2>
 <p>
-	<label for="duation">feature 1</label>
-	<input id="duration" value="value" />
-	<button>remove</button>
+  <label for="duation">feature 1</label>
+  <input id="duration" value="value" />
+  <button>remove</button>
 </p>
 <p>
-	<button>Add new feature</button>
+  <button>Add new feature</button>
 </p>
 
 <h2>Components</h2>
 <p>
-	<input value="1" />
-	<input value="component 1" />
-	<button>remove</button>
+  <input value="1" />
+  <input value="component 1" />
+  <button>remove</button>
 </p>
 <p>
-	<button>Add new component</button>
+  <button>Add new component</button>
 </p>
 
 <h2>Procedure</h2>
