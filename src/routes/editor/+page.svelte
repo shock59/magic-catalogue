@@ -50,9 +50,9 @@
 
 <form method="post" action="?/save" use:enhance>
   <p>
-    <input name="name" type="text" placeholder="Name" />
+    <input id="name" class="wide" name="name" type="text" placeholder="Name" />
   </p>
-  <p><input name="summary" type="summary" placeholder="Summary" /></p>
+  <p><input class="wide" name="summary" type="summary" placeholder="Summary" /></p>
 
   <h2>Features</h2>
   {#each features as feature}
@@ -74,7 +74,11 @@
   <h2>Components</h2>
   {#each components as component}
     <p>
-      <input name="component-{component.id}-quantity" bind:value={component.quantity} />
+      <input
+        class="quantity"
+        name="component-{component.id}-quantity"
+        bind:value={component.quantity}
+      />
       <input name="component-{component.id}-name" bind:value={component.name} />
       <button type="button" class="danger" onclick={() => removeComponent(component)}
         ><Trash size={16} /></button
@@ -96,3 +100,19 @@
 
   <p><button>Save spell</button></p>
 </form>
+
+<style>
+  #name {
+    font-size: 22px;
+    font-weight: bold;
+  }
+
+  .wide {
+    width: calc(100% - 16px);
+  }
+
+  .quantity {
+    width: 45px;
+    text-align: right;
+  }
+</style>
