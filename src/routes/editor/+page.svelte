@@ -34,5 +34,4 @@
 <h2>Notes</h2>
 <textarea rows="6"> </textarea>
 
-<style>
-</style>
+<p><button>Save spell</button></p>
