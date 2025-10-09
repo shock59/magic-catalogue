@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Trash from "lucide-svelte/icons/trash";
 </script>
 
 <h1>Spell editor</h1>
@@ -12,7 +13,7 @@
 <p>
   <label for="duation">feature 1</label>
   <input id="duration" value="value" />
-  <button class="danger">remove</button>
+  <button class="danger"><Trash size={16} /></button>
 </p>
 <p>
   <button>Add new feature</button>
@@ -22,7 +23,7 @@
 <p>
   <input value="1" />
   <input value="component 1" />
-  <button class="danger">remove</button>
+  <button class="danger"><Trash size={16} /></button>
 </p>
 <p>
   <button>Add new component</button>
