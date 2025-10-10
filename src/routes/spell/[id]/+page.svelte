@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { SpellCheck } from "lucide-svelte";
   import type { PageServerData } from "./$types";
 
   let { data }: { data: PageServerData } = $props();
