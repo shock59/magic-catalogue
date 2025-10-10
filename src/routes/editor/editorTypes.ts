@@ -10,6 +10,7 @@ export type Component = {
 
 export type Spell = {
   ownerId: string;
+  id: string;
 
   name: string;
   summary: string;

@@ -18,9 +18,16 @@ let user: {
   id: string;
   username: string;
 } | null;
+let spellId: string | null;
 
-export const load: PageServerLoad = async () => {
-  const spell = db.data.spells[0] ? (db.data.spells[0] as Spell) : undefined;
+export const load: PageServerLoad = async ({ url }) => {
+  spellId = url.searchParams.get("spell");
+
+  const spell = db.data.spells.find((s) => (s as Spell).id == spellId) as Spell | undefined;
+  if (spellId && !spell) {
+    return error(404, "That spell does not exist");
+  }
+
   user = getUser();
   if (user == null) {
     return redirect(302, "/login");
@@ -59,6 +66,7 @@ export const actions: Actions = {
 
     const spell: Spell = {
       ownerId: user!.id,
+      id: "1",
       name: formData.name,
       summary: formData.summary,
       features,
