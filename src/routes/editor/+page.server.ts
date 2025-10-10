@@ -36,7 +36,7 @@ export const load: PageServerLoad = async ({ url }) => {
 
   user = getUser();
   if (user == null) {
-    return redirect(302, "/login");
+    return redirect(302, "/account/login");
   }
   if (spell?.ownerId && user.id != spell?.ownerId) {
     return error(403, "You do not own that spell");

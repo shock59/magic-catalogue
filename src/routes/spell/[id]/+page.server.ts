@@ -1,5 +1,5 @@
 import { error } from "@sveltejs/kit";
-import type { PageServerLoad } from "../$types";
+import type { PageServerLoad } from "./$types";
 import db from "$lib/server/jsondb";
 import getUser from "$lib/getUser";
 
