@@ -1,11 +1,70 @@
 import { redirect } from "@sveltejs/kit";
 import type { Actions } from "./$types";
 
+type FormData = {
+  name: string;
+  summary: string;
+  [K: `feature-${bigint}-value`]: string;
+  [K: `component-${bigint}-name`]: string;
+  [K: `component-${bigint}-quantity`]: string;
+  procedure: string;
+  notes: string;
+};
+
+type Feature = {
+  name: string;
+  value: string;
+};
+
+type Component = {
+  quantity: number;
+  name: string;
+};
+
+type Spell = {
+  name: string;
+  summary: string;
+  features: Feature[];
+  components: Component[];
+  procedure: string;
+  notes: string;
+};
+
 export const actions: Actions = {
   save: async (event) => {
-    const formData = await event.request.formData();
+    const formData = Object.fromEntries(await event.request.formData()) as FormData;
 
-    console.log(formData);
+    const features: Feature[] = [];
+    const components: Component[] = [];
+    for (const key of Object.keys(formData) as (keyof FormData)[]) {
+      const splitKey = key.split("-");
+      if (splitKey.length != 3) continue;
+
+      switch (splitKey[0]) {
+        case "feature":
+          features.push({
+            name: "New feature",
+            value: formData[key],
+          });
+          break;
+        case "component":
+          if (splitKey[2] != "name") continue;
+          components.push({
+            name: formData[key],
+            quantity: Number(formData[`${splitKey[0]}-${splitKey[1]}-quantity` as keyof FormData]),
+          });
+      }
+    }
+
+    const spell: Spell = {
+      name: formData.name,
+      summary: formData.summary,
+      features,
+      components,
+      procedure: formData.procedure,
+      notes: formData.notes,
+    };
+    console.log(spell);
 
     return redirect(302, "/");
   },

@@ -58,7 +58,11 @@
   {#each features as feature}
     <p>
       <label for="feature-{feature.id}">{feature.name}</label>
-      <input id="feature-{feature.id}" name="feature-{feature.id}" bind:value={feature.value} />
+      <input
+        id="feature-{feature.id}"
+        name="feature-{feature.id}-value"
+        bind:value={feature.value}
+      />
       <button type="button" class="danger" onclick={() => removeFeature(feature)}
         ><Trash size={16} /></button
       >
