@@ -1,7 +1,6 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
   import Trash from "lucide-svelte/icons/trash";
-  import type { Component, Feature } from "./editorTypes";
   import type { PageServerData } from "./$types";
   import { onMount } from "svelte";
   let { data }: { data: PageServerData } = $props();
