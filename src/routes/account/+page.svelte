@@ -4,10 +4,10 @@
 
   let { data }: { data: PageServerData } = $props();
 
+  let dialog: HTMLDialogElement;
+
   function deleteAccountClicked() {
-    confirm(
-      "Are you sure you want to delete your account? This will also delete all of your spells and cannot be undone!!!",
-    );
+    dialog.showModal();
   }
 </script>
 
@@ -45,3 +45,14 @@
 <p>
   <button class="danger" onclick={deleteAccountClicked}>Delete account</button>
 </p>
+
+<dialog bind:this={dialog}>
+  <p>
+    Are you sure you want to delete your account? This will also delete all of your spells and
+    cannot be undone!!!
+  </p>
+  <p>
+    <button onclick={() => dialog.close()}>Cancel</button>
+    <button class="danger">Delete account</button>
+  </p>
+</dialog>

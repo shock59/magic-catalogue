@@ -65,3 +65,16 @@ button.danger:hover {
   background: #db3529 !important;
   color: #ffffff;
 }
+
+dialog {
+  padding: 16px;
+  border: 1px #d3c199 solid;
+  border-radius: 8px;
+  background: #fbf0d9;
+}
+
+dialog::backdrop {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.25);
+}
