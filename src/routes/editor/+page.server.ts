@@ -3,6 +3,7 @@ import type { Actions, PageServerLoad } from "./$types";
 import db from "$lib/server/jsondb";
 import type { Feature, Component, Spell } from "./editorTypes";
 import getUser from "$lib/getUser";
+import * as crypto from "node:crypto";
 
 type FormData = {
   name: string;
@@ -19,6 +20,12 @@ let user: {
   username: string;
 } | null;
 let spellId: string | null;
+
+function generateSpellId() {
+  const id = crypto.randomBytes(16).toString("hex");
+  if (db.data.spells.find((s) => (s as Spell).id == id)) return generateSpellId();
+  return id;
+}
 
 export const load: PageServerLoad = async ({ url }) => {
   spellId = url.searchParams.get("spell");
@@ -66,7 +73,7 @@ export const actions: Actions = {
 
     const spell: Spell = {
       ownerId: user!.id,
-      id: "1",
+      id: spellId ?? generateSpellId(),
       name: formData.name,
       summary: formData.summary,
       features,
