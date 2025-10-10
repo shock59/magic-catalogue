@@ -9,6 +9,8 @@ export type Component = {
 };
 
 export type Spell = {
+  ownerId: string;
+
   name: string;
   summary: string;
   features: Feature[];

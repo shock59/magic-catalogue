@@ -1,11 +1,10 @@
 import * as auth from "$lib/server/auth";
 import { fail, redirect } from "@sveltejs/kit";
-import { getRequestEvent } from "$app/server";
 import type { Actions, PageServerLoad } from "./$types";
+import getUser from "$lib/getUser";
 
 export const load: PageServerLoad = async () => {
-  const user = getUser();
-  return { user };
+  return { user: getUser() };
 };
 
 export const actions: Actions = {
@@ -19,8 +18,3 @@ export const actions: Actions = {
     return redirect(302, "/");
   },
 };
-
-function getUser() {
-  const { locals } = getRequestEvent();
-  return locals.user;
-}

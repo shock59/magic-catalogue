@@ -1,7 +1,8 @@
-import { redirect } from "@sveltejs/kit";
+import { error, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 import db from "$lib/server/jsondb";
 import type { Feature, Component, Spell } from "./editorTypes";
+import getUser from "$lib/getUser";
 
 type FormData = {
   name: string;
@@ -13,9 +14,21 @@ type FormData = {
   notes: string;
 };
 
+let user: {
+  id: string;
+  username: string;
+} | null;
+
 export const load: PageServerLoad = async () => {
   const spell = db.data.spells[0] ? (db.data.spells[0] as Spell) : undefined;
-  return { spell };
+  user = getUser();
+  if (user == null) {
+    return redirect(302, "/login");
+  }
+  if (spell?.ownerId && user.id != spell?.ownerId) {
+    return error(403, "You do not own that spell");
+  }
+  return { spell, user };
 };
 
 export const actions: Actions = {
@@ -45,6 +58,7 @@ export const actions: Actions = {
     }
 
     const spell: Spell = {
+      ownerId: user!.id,
       name: formData.name,
       summary: formData.summary,
       features,
