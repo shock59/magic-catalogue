@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { SpellCheck } from "lucide-svelte";
   import type { PageServerData } from "./$types";
 
   let { data }: { data: PageServerData } = $props();
@@ -36,3 +37,7 @@
 {#each data.spell.notes.split("\n") as line}
   <p>{line}</p>
 {/each}
+
+{#if data.user?.id == data.spell.ownerId}
+  <p><a href="/editor?spell={data.spell.id}">Edit this spell</a></p>
+{/if}
