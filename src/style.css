@@ -5,6 +5,20 @@ body {
   font-family: "Noto Serif", serif;
 }
 
+nav {
+  padding: 16px;
+  background: #d3c199;
+}
+
+nav span {
+  margin-left: 32px;
+}
+
+nav a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
 main {
   padding: 16px;
 }

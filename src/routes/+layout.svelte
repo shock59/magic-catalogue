@@ -14,6 +14,15 @@
   />
 </svelte:head>
 
+<nav>
+  <b>Magic Catalogue</b>
+
+  <span><a href="/">Home</a></span>
+  <span><a href="/explore">Explore</a></span>
+  <span><a href="/mySpells">My Spells</a></span>
+  <span><a href="/account">Account</a></span>
+</nav>
+
 <main>
   {@render children?.()}
 </main>
