@@ -1,5 +1,6 @@
 import { redirect } from "@sveltejs/kit";
 import type { Actions } from "./$types";
+import db from "$lib/server/jsondb";
 
 type FormData = {
   name: string;
@@ -64,7 +65,7 @@ export const actions: Actions = {
       procedure: formData.procedure,
       notes: formData.notes,
     };
-    console.log(spell);
+    db.update(({ spells }) => (spells[0] = spell));
 
     return redirect(302, "/");
   },
