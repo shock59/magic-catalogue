@@ -1,6 +1,7 @@
 import { redirect } from "@sveltejs/kit";
-import type { Actions } from "./$types";
+import type { Actions, PageServerLoad } from "./$types";
 import db from "$lib/server/jsondb";
+import type { Feature, Component, Spell } from "./editorTypes";
 
 type FormData = {
   name: string;
@@ -12,23 +13,9 @@ type FormData = {
   notes: string;
 };
 
-type Feature = {
-  name: string;
-  value: string;
-};
-
-type Component = {
-  quantity: number;
-  name: string;
-};
-
-type Spell = {
-  name: string;
-  summary: string;
-  features: Feature[];
-  components: Component[];
-  procedure: string;
-  notes: string;
+export const load: PageServerLoad = async () => {
+  const spell = db.data.spells[0] ? (db.data.spells[0] as Spell) : undefined;
+  return { spell };
 };
 
 export const actions: Actions = {

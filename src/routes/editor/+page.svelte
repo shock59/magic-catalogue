@@ -1,23 +1,23 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
   import Trash from "lucide-svelte/icons/trash";
+  import type { Component, Feature } from "./editorTypes";
+  import type { PageServerData } from "./$types";
+  import { onMount } from "svelte";
+  let { data }: { data: PageServerData } = $props();
 
-  type Feature = {
-    id: string;
-    name: string;
-    value: string;
-  };
-
-  type Component = {
-    id: string;
-    quantity: number;
-    name: string;
-  };
+  type IDObject = { id: string };
+  type EditorFeature = Feature & IDObject;
+  type EditorComponent = Component & IDObject;
 
   let nextId: number = $state(0);
 
-  let features: Feature[] = $state([]);
-  let components: Component[] = $state([]);
+  let name: string = $state("");
+  let summary: string = $state("");
+  let features: EditorFeature[] = $state([]);
+  let components: EditorComponent[] = $state([]);
+  let procedure: string = $state("");
+  let notes: string = $state("");
 
   function addFeature() {
     features.push({
@@ -28,7 +28,7 @@
     nextId++;
   }
 
-  function removeFeature(feature: Feature) {
+  function removeFeature(feature: EditorFeature) {
     features.splice(features.indexOf(feature), 1);
   }
 
@@ -41,18 +41,38 @@
     nextId++;
   }
 
-  function removeComponent(component: Component) {
+  function removeComponent(component: EditorComponent) {
     components.splice(components.indexOf(component), 1);
   }
+
+  function addIds<T extends Feature | Component>(x: T[]) {
+    return x.map((x) => {
+      const withId = { ...x, id: nextId.toString() };
+      nextId++;
+      return withId;
+    }) as (T & IDObject)[];
+  }
+
+  onMount(() => {
+    const spell = data.spell;
+    if (!spell) return;
+
+    name = spell.name;
+    summary = spell.summary;
+    procedure = spell.procedure;
+    notes = spell.notes;
+    features = addIds(spell.features);
+    components = addIds(spell.components);
+  });
 </script>
 
 <h1>Spell editor</h1>
 
 <form method="post" action="?/save" use:enhance>
   <p>
-    <input id="name" class="wide" name="name" type="text" placeholder="Name" />
+    <input id="name" class="wide" name="name" type="text" placeholder="Name" value={name} />
   </p>
-  <p><input class="wide" name="summary" type="summary" placeholder="Summary" /></p>
+  <p><input class="wide" name="summary" type="summary" placeholder="Summary" value={summary} /></p>
 
   <h2>Features</h2>
   {#each features as feature}
@@ -97,10 +117,10 @@
   </p>
 
   <h2>Procedure</h2>
-  <textarea name="procedure" rows="6"></textarea>
+  <textarea name="procedure" rows="6" value={procedure}></textarea>
 
   <h2>Notes</h2>
-  <textarea name="notes" rows="6"> </textarea>
+  <textarea name="notes" rows="6" value={notes}></textarea>
 
   <p><button>Save spell</button></p>
 </form>
