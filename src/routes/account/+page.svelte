@@ -1,8 +1,8 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
-  import type { PageServerData } from "./$types";
+  import type { ActionData, PageServerData } from "./$types";
 
-  let { data }: { data: PageServerData } = $props();
+  let { data, form }: { data: PageServerData; form: ActionData } = $props();
 
   let dialog: HTMLDialogElement;
 
@@ -50,6 +50,8 @@
     <button>Update password</button>
   </p>
 </form>
+
+<p style="color: red">{form?.message ?? ""}</p>
 
 <p>
   <button class="danger" onclick={deleteAccountClicked}>Delete account</button>

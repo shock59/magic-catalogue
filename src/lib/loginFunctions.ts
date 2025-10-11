@@ -1,12 +1,28 @@
 import { hash } from "@node-rs/argon2";
+import { db } from "$lib/server/db";
+import * as table from "$lib/server/db/schema";
+import { eq } from "drizzle-orm";
 
-export function validateUsername(username: unknown): username is string {
-  return (
+export async function validateUsername(
+  username: unknown,
+  registering: boolean = true,
+): Promise<boolean> {
+  const meetsRequirements =
     typeof username === "string" &&
     username.length >= 3 &&
     username.length <= 31 &&
-    /^[a-zA-Z0-9_-]+$/.test(username)
-  );
+    /^[a-zA-Z0-9_-]+$/.test(username);
+
+  if (!registering) return meetsRequirements;
+  if (!meetsRequirements) return false;
+
+  const results = await db.select().from(table.user).where(eq(table.user.username, username));
+  const existingUser = results.at(0);
+  if (existingUser) {
+    return false;
+  }
+
+  return meetsRequirements;
 }
 
 // TODO: Make it actually properly validate the email
