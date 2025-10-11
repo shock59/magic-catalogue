@@ -80,7 +80,14 @@ export const actions: Actions = {
       procedure: formData.procedure,
       notes: formData.notes,
     };
-    db.update(({ spells }) => (spells[0] = spell));
+    db.update(({ spells }) => {
+      if (spellId) {
+        spells[spells.findIndex((s) => s.id == spellId)] = spell;
+      } else {
+        spells.unshift(spell);
+      }
+      return spells;
+    });
 
     return redirect(302, "/");
   },
