@@ -53,10 +53,10 @@ async function updateUserDetail(toUpdate: "email" | "username" | "password", eve
   }
 
   if (
-    typeof formData != "string" && // Stop TypeScript whining even though the other three functions already check this
-    ((toUpdate == "username" && !validateUsername(formData)) ||
-      (toUpdate == "email" && !validateEmail(formData)) ||
-      (toUpdate == "password" && !validatePassword(formData)))
+    typeof formData != "string" || // Stop TypeScript whining even though the other three functions already check this
+    (toUpdate == "username" && !validateUsername(formData)) ||
+    (toUpdate == "email" && !validateEmail(formData)) ||
+    (toUpdate == "password" && !validatePassword(formData))
   ) {
     return fail(400, { message: `Invalid ${toUpdate}` });
   }
