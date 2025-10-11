@@ -35,6 +35,14 @@
   </p>
 </form>
 
+<form method="post" action="?/editEmail">
+  <p>
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" placeholder="Email" value={data.user.email} />
+    <button>Update email</button>
+  </p>
+</form>
+
 <form method="post" action="?/editPassword">
   <p>
     <label for="password">Password</label>
