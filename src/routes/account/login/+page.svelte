@@ -16,6 +16,13 @@
 
   <p>
     <label>
+      Email
+      <input type="email" name="email" />
+    </label>
+  </p>
+
+  <p>
+    <label>
       Password
       <input type="password" name="password" />
     </label>

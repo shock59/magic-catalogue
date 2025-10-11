@@ -1,15 +1,12 @@
 import * as auth from "$lib/server/auth";
 import { fail, redirect } from "@sveltejs/kit";
-import { getRequestEvent } from "$app/server";
 import type { Actions, PageServerLoad, RequestEvent } from "./$types";
 import { db } from "$lib/server/db";
 import * as table from "$lib/server/db/schema";
 import { eq } from "drizzle-orm";
+import getUser from "$lib/getUser";
 
-let user: {
-  id: string;
-  username: string;
-};
+let user: App.Locals["user"];
 
 export const load: PageServerLoad = async () => {
   user = requireLogin();
@@ -19,6 +16,10 @@ export const load: PageServerLoad = async () => {
 export const actions: Actions = {
   logout,
   editUsername: async (event) => {
+    if (!user) {
+      return fail(401);
+    }
+
     const newUsername = (await event.request.formData()).get("username");
     if (!newUsername) {
       return fail(400, "Please specify a new username");
@@ -46,11 +47,10 @@ async function logout(event: RequestEvent) {
 }
 
 function requireLogin() {
-  const { locals } = getRequestEvent();
-
-  if (!locals.user) {
+  const user = getUser();
+  if (!user) {
     return redirect(302, "/account/login");
   }
 
-  return locals.user;
+  return user;
 }

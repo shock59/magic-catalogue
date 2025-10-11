@@ -53,16 +53,24 @@ export const actions: Actions = {
     return redirect(302, "/");
   },
   register: async (event) => {
+    console.log("tried to register!");
+
     const formData = await event.request.formData();
     const username = formData.get("username");
+    const email = formData.get("email");
     const password = formData.get("password");
 
     if (!validateUsername(username)) {
       return fail(400, { message: "Invalid username" });
     }
+    if (!validateEmail(email)) {
+      return fail(400, { message: "Invalid email" });
+    }
     if (!validatePassword(password)) {
       return fail(400, { message: "Invalid password" });
     }
+
+    console.log(typeof email);
 
     const userId = generateUserId();
     const passwordHash = await hash(password, {
@@ -74,12 +82,13 @@ export const actions: Actions = {
     });
 
     try {
-      await db.insert(table.user).values({ id: userId, username, passwordHash });
+      await db.insert(table.user).values({ id: userId, username, email, passwordHash });
 
       const sessionToken = auth.generateSessionToken();
       const session = await auth.createSession(sessionToken, userId);
       auth.setSessionTokenCookie(event, sessionToken, session.expiresAt);
-    } catch {
+    } catch (exceptionVar) {
+      console.log(exceptionVar);
       return fail(500, { message: "An error has occurred" });
     }
     return redirect(302, "/");
@@ -100,6 +109,11 @@ function validateUsername(username: unknown): username is string {
     username.length <= 31 &&
     /^[a-zA-Z0-9_-]+$/.test(username)
   );
+}
+
+// TODO: Make it actually properly validate the email
+function validateEmail(email: unknown) {
+  return typeof email === "string";
 }
 
 function validatePassword(password: unknown): password is string {

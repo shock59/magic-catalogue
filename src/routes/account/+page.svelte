@@ -14,6 +14,7 @@
 <h1>Your Account</h1>
 
 <p>Hi, <b>{data.user.username}</b>!</p>
+<p>Your email is {data.user.email}.</p>
 <p>Your user ID is {data.user.id}.</p>
 <form method="post" action="?/logout" use:enhance>
   <button>Sign out</button>
