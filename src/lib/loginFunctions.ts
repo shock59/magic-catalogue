@@ -21,8 +21,7 @@ export async function validateUsername(
   if (existingUser) {
     return false;
   }
-
-  return meetsRequirements;
+  return true;
 }
 
 // TODO: Make it actually properly validate the email
