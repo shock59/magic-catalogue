@@ -26,7 +26,7 @@ export const actions: Actions = {
     const username = formData.get("username");
     const password = formData.get("password");
 
-    if (!validateUsername(username, false)) {
+    if (!(await validateUsername(username, false))) {
       return fail(400, {
         message: "Invalid username",
       });
@@ -64,7 +64,7 @@ export const actions: Actions = {
     const email = formData.get("email");
     const password = formData.get("password");
 
-    if (!validateUsername(username)) {
+    if (!(await validateUsername(username))) {
       return fail(400, { message: "Invalid username" });
     }
     if (!validateEmail(email)) {

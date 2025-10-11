@@ -54,7 +54,7 @@ async function updateUserDetail(toUpdate: "email" | "username" | "password", eve
 
   if (
     typeof formData != "string" || // Stop TypeScript whining even though the other three functions already check this
-    (toUpdate == "username" && !validateUsername(formData)) ||
+    (toUpdate == "username" && !(await validateUsername(formData))) ||
     (toUpdate == "email" && !validateEmail(formData)) ||
     (toUpdate == "password" && !validatePassword(formData))
   ) {
