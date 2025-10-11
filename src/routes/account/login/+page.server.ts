@@ -53,8 +53,6 @@ export const actions: Actions = {
     return redirect(302, "/");
   },
   register: async (event) => {
-    console.log("tried to register!");
-
     const formData = await event.request.formData();
     const username = formData.get("username");
     const email = formData.get("email");
@@ -69,8 +67,6 @@ export const actions: Actions = {
     if (!validatePassword(password)) {
       return fail(400, { message: "Invalid password" });
     }
-
-    console.log(typeof email);
 
     const userId = generateUserId();
     const passwordHash = await hash(password, {
@@ -87,8 +83,7 @@ export const actions: Actions = {
       const sessionToken = auth.generateSessionToken();
       const session = await auth.createSession(sessionToken, userId);
       auth.setSessionTokenCookie(event, sessionToken, session.expiresAt);
-    } catch (exceptionVar) {
-      console.log(exceptionVar);
+    } catch {
       return fail(500, { message: "An error has occurred" });
     }
     return redirect(302, "/");
